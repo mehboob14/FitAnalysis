@@ -1,0 +1,54 @@
+{
+  "Fabric_charactericts": "Black twill, 80% polyamide, 20% elastane",
+  "Model_Measurement": "Model is 180cm/ 5'11\" and is wearing a size Small",
+  "images": {
+    "fabric_close_image": "C:\\Users\\Administrator\\Desktop\\dress_scraper_app\\scraper\\data\\images\\downloaded\\image_0.jpeg",
+    "fabric_dress_image": "C:\\Users\\Administrator\\Desktop\\dress_scraper_app\\scraper\\data\\images\\downloaded\\image_1.jpeg",
+    "model_wearning_front_image": "C:\\Users\\Administrator\\Desktop\\dress_scraper_app\\scraper\\data\\images\\downloaded\\image_2.jpeg",
+    "model_wearning_back_image": "C:\\Users\\Administrator\\Desktop\\dress_scraper_app\\scraper\\data\\images\\downloaded\\image_3.jpeg"
+  },
+  "sizing_guide": {
+    "Bust": {
+      "x small": "76",
+      "small": "78",
+      "medium": "84",
+      "large": "88",
+      "x large": "94"
+    },
+    "Sleeve": {
+      "x small": "69",
+      "small": "69",
+      "medium": "70",
+      "large": "70",
+      "x large": "73"
+    },
+    "Shoulder": {
+      "x small": "36",
+      "small": "37",
+      "medium": "38",
+      "large": "39",
+      "x large": "41"
+    },
+    "Waist": {
+      "x small": "68",
+      "small": "74",
+      "medium": "76",
+      "large": "84",
+      "x large": "90"
+    },
+    "Hip": {
+      "x small": "86",
+      "small": "88",
+      "medium": "90",
+      "large": "96",
+      "x large": "104"
+    },
+    "Length": {
+      "x small": "83",
+      "small": "83",
+      "medium": "84",
+      "large": "86",
+      "x large": "87"
+    }
+  }
+}
