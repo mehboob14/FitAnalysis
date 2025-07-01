@@ -13,7 +13,7 @@ output_path = os.path.join(data_dir, "formatted_output.json")
 key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=key)  
 
-# === HELPERS ===
+    
 def load_text(filepath):
     with open(filepath, "r", encoding="utf-8") as f:
         return f.read()
