@@ -1,9 +1,5 @@
 services:
   - type: web
-    name: dress-fit-analyzer
-    env: python
-    buildCommand: |
-      pip install -r requirements.txt
-    startCommand: |
-      chmod +x entrypoint.sh
-      ./entrypoint.sh
+    name: my-service-name
+    env: docker
+    region: oregon
