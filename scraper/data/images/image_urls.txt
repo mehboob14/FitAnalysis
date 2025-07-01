@@ -1,5 +1,6 @@
 image urls:
-https://www.net-a-porter.com/variants/images/1647597354715458/cu/w2000_q60.jpg
-https://www.net-a-porter.com/variants/images/1647597354715458/in/w2000_q60.jpg
-https://www.net-a-porter.com/variants/images/1647597354715458/ou/w2000_q60.jpg
-https://www.net-a-porter.com/variants/images/1647597354715458/bk/w2000_q60.jpg
+https://www.net-a-porter.com/variants/images/1647597338909782/cu/w2000_q60.jpg
+https://www.net-a-porter.com/variants/images/1647597338909782/in/w2000_q60.jpg
+https://www.net-a-porter.com/variants/images/1647597338909782/ou/w2000_q60.jpg
+https://www.net-a-porter.com/variants/images/1647597338909782/fr/w2000_q60.jpg
+https://www.net-a-porter.com/variants/images/1647597338909782/bk/w2000_q60.jpg

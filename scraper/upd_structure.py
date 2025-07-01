@@ -3,8 +3,6 @@ import json
 import base64
 from openai import OpenAI
 
-key = os.getenv("OPENAI_API_KEY")
-
 def run_structure():
     DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
     IMAGES_DIR = os.path.join(DATA_DIR, 'images', 'downloaded')
@@ -12,7 +10,7 @@ def run_structure():
     SIZE_GUIDE_PATH = os.path.join(DATA_DIR, 'Size_guide.json')
     OUTPUT_PATH = os.path.join(DATA_DIR, 'formatted_output.json')
 
-    client = OpenAI(api_key=key)
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     def load_text(filepath):
         with open(filepath, "r", encoding="utf-8") as f:
@@ -120,7 +118,7 @@ Return only the JSON. Do not invent IDs. Do not add markdown.
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(structured, f, indent=2)
 
-    print(f"\n JSON saved to {OUTPUT_PATH}")
+    print(f"\n✅ JSON saved to {OUTPUT_PATH}")
 
 if __name__ == "__main__":
     run_structure()

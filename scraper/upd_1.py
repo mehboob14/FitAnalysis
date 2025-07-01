@@ -45,7 +45,7 @@ def download_images(image_links, save_dir=DOWNLOADED_IMAGES_DIR):
 
 async def scrape_product_page(url):
     async with async_playwright() as p:
-        browser = await p.firefox.launch(headless=True)
+        browser = await p.firefox.launch(headless=False)
         context = await browser.new_context()
         page = await context.new_page()
         await page.goto(url)
