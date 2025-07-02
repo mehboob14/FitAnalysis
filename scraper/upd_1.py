@@ -13,6 +13,7 @@ IMAGES_DIR = os.path.join(DATA_DIR, 'images')
 DOWNLOADED_IMAGES_DIR = os.path.join(IMAGES_DIR, 'downloaded')
 
 def download_images(image_links, save_dir=DOWNLOADED_IMAGES_DIR):
+    print("[DEBUG] Starting download_images")
     os.makedirs(save_dir, exist_ok=True)
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -25,6 +26,7 @@ def download_images(image_links, save_dir=DOWNLOADED_IMAGES_DIR):
     }
     for idx, url in enumerate(image_links):
         try:
+            print(f"[DEBUG] Downloading image: {url}")
             filename = f"image_{idx}.jpeg"
             path = os.path.join(save_dir, filename)
             response = requests.get(url, headers=headers, timeout=30)
@@ -33,41 +35,53 @@ def download_images(image_links, save_dir=DOWNLOADED_IMAGES_DIR):
             try:
                 img = Image.open(img_bytes)
                 img.verify()
-            except Exception:
+            except Exception as e:
+                print(f"[DEBUG] Image verify failed: {e}")
                 continue
             img_bytes.seek(0)
             img = Image.open(img_bytes)
             if img.mode in ("RGBA", "P"):
                 img = img.convert("RGB")
             img.save(path, format="JPEG", quality=95)
-        except Exception:
+            print(f"[DEBUG] Saved image: {path}")
+        except Exception as e:
+            print(f"[DEBUG] Failed to download image: {e}")
             pass
 
 async def scrape_product_page(url):
-    print("scraping started")
+    print("[DEBUG] scraping started")
+    print("[DEBUG] Before playwright launch")
     async with async_playwright() as p:
+        print("[DEBUG] Playwright started")
         browser = await p.firefox.launch(headless=True)
+        print("[DEBUG] Browser launched")
         context = await browser.new_context()
         page = await context.new_page()
+        print("[DEBUG] Page created")
         await page.goto(url)
+        print(f"[DEBUG] Went to {url}")
         await page.wait_for_timeout(3000)
         try:
             await page.wait_for_selector("label[for='Size & Fit-open']", timeout=5000)
             await page.click("label[for='Size & Fit-open']")
             await page.wait_for_timeout(1500)
-        except:
-            pass
+            print("[DEBUG] Clicked Size & Fit-open")
+        except Exception as e:
+            print(f"[DEBUG] Size & Fit-open not found: {e}")
         try:
             await page.wait_for_selector('[data-testid="accordion-sizeguide-link"] a.SizeChartLink88__sizeGuideLink', timeout=3000)
             await page.click('[data-testid="accordion-sizeguide-link"] a.SizeChartLink88__sizeGuideLink')
             await page.wait_for_timeout(4000)
-        except:
-            pass
+            print("[DEBUG] Clicked size guide link")
+        except Exception as e:
+            print(f"[DEBUG] Size guide link not found: {e}")
+        print("[DEBUG] Extracting HTML content")
         full_html = await page.content()
         soup = BeautifulSoup(full_html, 'html.parser')
         result = {}
         editors_notes = soup.select_one('#EDITORS_NOTES .EditorialAccordion88__accordionContent--editors_notes')
         result["editors_notes"] = editors_notes.get_text(strip=True, separator="\n") if editors_notes else "Not found"
+        print(f"[DEBUG] Editors Notes: {result['editors_notes'][:50]}...")
         size_fit_section = soup.select_one('#SIZE_AND_FIT .EditorialAccordion88__accordionContent--size_and_fit')
         size_fit_details = []
         model_measurements = []
@@ -81,8 +95,11 @@ async def scrape_product_page(url):
                     size_fit_details.append(text)
         result["size_fit"] = size_fit_details
         result["model_measurements"] = model_measurements
+        print(f"[DEBUG] Size & Fit details: {size_fit_details}")
+        print(f"[DEBUG] Model measurements: {model_measurements}")
         details_care_section = soup.select_one('#DETAILS_AND_CARE .EditorialAccordion88__accordionContent--details_and_care')
         result["details_care"] = [li.get_text(strip=True) for li in details_care_section.find_all('li')] if details_care_section else []
+        print(f"[DEBUG] Details & Care: {result['details_care']}")
         try:
             overlay_html = await page.inner_html(".Overlay9.SizeChart88__sizeGuide")
             overlay_soup = BeautifulSoup(overlay_html, "html.parser")
@@ -102,7 +119,9 @@ async def scrape_product_page(url):
                 result["size_guide_popup"] = structured_popup
             else:
                 result["size_guide_popup"] = "Table not found"
-        except Exception:
+            print(f"[DEBUG] Size guide popup: {result['size_guide_popup']}")
+        except Exception as e:
+            print(f"[DEBUG] Size guide popup error: {e}")
             result["size_guide_popup"] = "Popup not loaded"
         image_urls = []
         carousel_track = soup.select_one('ul.ImageCarousel88__track')
@@ -117,6 +136,7 @@ async def scrape_product_page(url):
                         preferred = 'https:' + preferred
                     image_urls.append(preferred)
         image_urls = list(dict.fromkeys(image_urls))
+        print(f"[DEBUG] Found {len(image_urls)} image URLs")
         os.makedirs(IMAGES_DIR, exist_ok=True)
         file_path = os.path.join(IMAGES_DIR, "image_urls.txt")
         with open(file_path, "w", encoding="utf-8") as f:
@@ -125,6 +145,7 @@ async def scrape_product_page(url):
                 f.write(url + "\n")
         download_images(image_urls)
         await browser.close()
+        print("[DEBUG] Browser closed")
         return result
 
 def run_scrape_and_save(url):
@@ -153,11 +174,11 @@ def run_scrape_and_save(url):
         print(f"[DEBUG] Writing size guide to: {size_guide_path}")
         with open(size_guide_path, "w", encoding="utf-8") as f:
             json.dump(data.get("size_guide_popup", {}), f, ensure_ascii=False, indent=2)
+        print("[DEBUG] run_scrape_and_save completed successfully")
     except Exception as e:
-        print(f"Error during scraping: {e}")
+        print(f"[DEBUG] Error during scraping: {e}")
 
 
 if __name__ == "__main__":
-    # dress_url = "https://www.net-a-porter.com/en-us/shop/product/moncler/clothing/midi-dresses/ribbed-wool-turleneck-midi-dress/1647597338909782"
     dress_url = "https://www.net-a-porter.com/en-us/shop/product/max-mara/clothing/mini-dresses/bartolo-twill-mini-dress/1647597354715458"
     run_scrape_and_save(dress_url)
