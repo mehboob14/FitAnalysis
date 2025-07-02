@@ -17,7 +17,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Install Playwright browsers with system dependencies
-RUN npx playwright install --with-deps
+RUN playwright install
+
 
 # Or if Playwright is in your requirements.txt, do:
 # RUN playwright install --with-deps
