@@ -1,9 +1,11 @@
 # Use official Python image
 FROM python:3.11
 
-# Install system dependencies for Playwright Chromium
+# Install system dependencies for Playwright Chromium + OpenCV + Xvfb
 RUN apt-get update && apt-get install -y \
     wget \
+    xvfb \
+    libgl1 \
     libnss3 \
     libatk1.0-0 \
     libatk-bridge2.0-0 \
