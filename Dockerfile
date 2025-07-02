@@ -50,4 +50,4 @@ COPY . .
 EXPOSE 8000
 
 # Run Gunicorn with Xvfb for headless
-CMD ["sh", "-c", "Xvfb :99 & export DISPLAY=:99 && gunicorn app:app --bind 0.0.0.0:8000"]
+CMD ["sh", "-c", "Xvfb :99 & export DISPLAY=:99 && gunicorn app:app --bind 0.0.0.0:8000 --timeout 120"]
