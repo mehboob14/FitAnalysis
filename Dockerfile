@@ -1,7 +1,6 @@
-# Use official Python image
+
 FROM python:3.11
 
-# Install system dependencies for Playwright Chromium + OpenCV + Xvfb
 RUN apt-get update && apt-get install -y \
     wget \
     xvfb \
@@ -40,7 +39,6 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Playwright browsers
 RUN playwright install firefox
 
 # Copy project
@@ -50,4 +48,4 @@ COPY . .
 EXPOSE 8000
 
 # Run Gunicorn with Xvfb for headless
-CMD ["sh", "-c", "Xvfb :99 & export DISPLAY=:99 && gunicorn app:app --bind 0.0.0.0:8000 --timeout 120"]
+CMD ["sh", "-c", "Xvfb :99 & export DISPLAY=:99 && gunicorn app:app --bind 0.0.0.0:8000 --workers 1 --threads 2 --timeout 120 --graceful-timeout 30"]

@@ -113,12 +113,12 @@ Return only the JSON. Do not invent IDs. Do not add markdown.
             if path:
                 structured["images"][key] = path
             else:
-                print(f"⚠️ Warning: ID {image_id} not found!")
+                print(f" Warning: ID {image_id} not found!")
 
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(structured, f, indent=2)
 
-    print(f"\n✅ JSON saved to {OUTPUT_PATH}")
+    print(f"\nJSON saved to {OUTPUT_PATH}")
 
 if __name__ == "__main__":
     run_structure()

@@ -9,6 +9,7 @@ import json
 
 OPENAI_MODEL = "gpt-4.1"
 api_key = os.getenv("OPENAI_API_KEY")
+
 def encode_image(image_path):
     image = cv.imread(image_path)
     if image is None:
