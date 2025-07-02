@@ -8,17 +8,19 @@ RUN apt-get update && apt-get install -y \
     libatk1.0-0 libcups2 libdbus-1-3 libgdk-pixbuf2.0-0 \
     libnspr4 libnss3 libx11-xcb1 libxcomposite1 libxdamage1 \
     libxrandr2 xdg-utils libxkbcommon0 libxshmfence1 libgbm1 \
-    libgtk-3-0 libxss1 libxcursor1 libgdk-3-0
+    libgtk-3-0 libxss1 libxcursor1
 
-# Set working directory
 WORKDIR /app
 
 # Copy requirements and install Python deps
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Playwright browsers with dependencies
-RUN playwright install --with-deps
+# Install Playwright browsers with system dependencies
+RUN npx playwright install --with-deps
+
+# Or if Playwright is in your requirements.txt, do:
+# RUN playwright install --with-deps
 
 # Copy rest of your project
 COPY . .
