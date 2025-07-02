@@ -18,6 +18,7 @@ def encode_image(image_path):
     return base64.b64encode(buffer).decode("utf-8")
 
 def run_fit_analysis(front_image_path, side_image_path, json_path=None):
+    print("fit analysis started")
     front_b64 = encode_image(front_image_path)
     side_b64 = encode_image(side_image_path)
 

@@ -32,20 +32,19 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends \
  && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+
 WORKDIR /app
 
-# Copy requirements and install Python deps
+
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 RUN playwright install firefox
 
-# Copy project
+
 COPY . .
 
-# Expose port
 EXPOSE 8000
 
-# Run Gunicorn with Xvfb for headless
+
 CMD ["sh", "-c", "Xvfb :99 & export DISPLAY=:99 && gunicorn app:app --bind 0.0.0.0:8000 --workers 1 --threads 2 --timeout 120 --graceful-timeout 30"]

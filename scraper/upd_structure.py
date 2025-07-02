@@ -4,6 +4,7 @@ import base64
 from openai import OpenAI
 
 def run_structure():
+    print("structing started")
     DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
     IMAGES_DIR = os.path.join(DATA_DIR, 'images', 'downloaded')
     DETAILS_PATH = os.path.join(DATA_DIR, 'dress_details.txt')
