@@ -3,12 +3,36 @@ FROM python:3.11
 
 # Install system dependencies needed for Playwright headless browsers
 RUN apt-get update && apt-get install -y \
-    wget curl ca-certificates xvfb \
-    fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 \
-    libatk1.0-0 libcups2 libdbus-1-3 libgdk-pixbuf2.0-0 \
-    libnspr4 libnss3 libx11-xcb1 libxcomposite1 libxdamage1 \
-    libxrandr2 xdg-utils libxkbcommon0 libxshmfence1 libgbm1 \
-    libgtk-3-0 libxss1 libxcursor1
+    libnss3 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libxkbcommon0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxrandr2 \
+    libgbm1 \
+    libgtk-3-0 \
+    libgtk-4-1 \
+    libasound2 \
+    libpango-1.0-0 \
+    libcairo2 \
+    libgdk-pixbuf2.0-0 \
+    libwoff1 \
+    libwoff2-1.0-2 \
+    libvpx7 \
+    libopus0 \
+    libgstreamer1.0-0 \
+    libgstbase-1.0-0 \
+    libgstapp-1.0-0 \
+    libgstvideo-1.0-0 \
+    libgstpbutils-1.0-0 \
+    libgsttag-1.0-0 \
+    libgraphene-1.0-0 \
+    libsecret-1-0 \
+    libx264-155 \
+    # and others reported as missing
+
 
 WORKDIR /app
 
