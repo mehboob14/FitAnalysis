@@ -18,6 +18,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def index():
+    print("request recived")
     return render_template('index.html')
 
 @app.route('/performAnalysis', methods=['POST'])
