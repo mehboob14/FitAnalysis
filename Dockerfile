@@ -30,24 +30,19 @@ RUN apt-get update && apt-get install -y \
     libgsttag-1.0-0 \
     libgraphene-1.0-0 \
     libsecret-1-0 \
-    libx264-155 \
-    # and others reported as missing
+    libx264-155
 
-
+# Set working directory
 WORKDIR /app
 
-# Copy requirements and install Python deps
+# Copy requirements and install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Playwright browsers with system dependencies
+# Install Playwright browsers
 RUN playwright install
 
-
-# Or if Playwright is in your requirements.txt, do:
-# RUN playwright install --with-deps
-
-# Copy rest of your project
+# Copy rest of the application
 COPY . .
 
 # Expose port
